@@ -166,7 +166,7 @@ endfunction
 
 function! s:show_digraphs (digraphs, cursor_char, context)
     " Pad digraph table to fill screen
-    let digraphs = copy(a:digraphs) + repeat([""], winheight(0))
+    let digraphs = copy(a:digraphs)
 
     " Display first half of digraph table...
     echohl BDG_Digraph_Table
