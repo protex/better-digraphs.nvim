@@ -91,9 +91,10 @@ local digraphs = function(mode, opts)
     attach_mappings = function(prompt_bufnr, map)
       actions.select_default:replace(function()
         actions.close(prompt_bufnr)
+        vim.api.nvim_feedkeys('l', "", false)
         local selection = action_state.get_selected_entry()
-        if not mode or not string.match(mode, "[ar]") then
-          vim.api.nvim_feedkeys("a" .. selection.value[2], "", false)
+        if not mode or not string.match(mode, "[ir]") then
+          vim.api.nvim_feedkeys("i" .. "" .. selection.value[2], "", false)
         else
           vim.api.nvim_feedkeys(mode .. "" .. selection.value[2], "", false)
         end

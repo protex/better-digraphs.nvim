@@ -11,7 +11,7 @@ Plug 'protex/better-digraphs'
 # Usage
 The recommended mappings for this plugin are the following:
 ```vim
-inoremap <C-k><C-k> <Cmd>lua require'betterdigraphs'.digraphs("a")<CR>
+inoremap <C-k><C-k> <Cmd>lua require'betterdigraphs'.digraphs("i")<CR>
 nnoremap r<C-k><C-k> <Cmd>lua require'betterdigraphs'.digraphs("r")<CR>
 ```
 
