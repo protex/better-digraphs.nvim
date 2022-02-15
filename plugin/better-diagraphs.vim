@@ -1,5 +1,5 @@
 " If already loaded, we're done...
-if exists("loaded_betterdigraphs")
+if exists("g:loaded_betterdigraphs")
     finish
 endif
 let loaded_betterdigraphs = 1
@@ -9,5 +9,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 command! Digraphs lua require'betterdigraphs'.digraphs()
+
 " Restore previous external compatibility options
 let &cpo = s:save_cpo
+let g:loaded_betterdigraphs = 1
