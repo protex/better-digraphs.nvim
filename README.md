@@ -13,6 +13,7 @@ The recommended mappings for this plugin are the following:
 ```vim
 inoremap <C-k><C-k> <Cmd>lua require'betterdigraphs'.digraphs("i")<CR>
 nnoremap r<C-k><C-k> <Cmd>lua require'betterdigraphs'.digraphs("r")<CR>
+vnoremap r<C-k><C-k> <ESC><Cmd>lua require'betterdigraphs'.digraphs("gvr")<CR>
 ```
 
-This will allow the usage of the normal `<C-k>` in insert mode and during a single character replace, but allows you to quickly pull up the search if you can't remember the digraph you're looking for. The search will allow you to fuzzy search by either digraph shortcut (OK for ✓) or official name ("CHECK MARK" for ✓).
+This will allow the usage of the normal `<C-k>` in insert mode, single character replace, and multiple character replace, but allows you to quickly pull up the search if you can't remember the digraph you're looking for. The search will allow you to fuzzy search by either digraph shortcut (OK for ✓) or official name ("CHECK MARK" for ✓).

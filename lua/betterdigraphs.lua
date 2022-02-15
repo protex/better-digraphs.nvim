@@ -93,7 +93,7 @@ local digraphs = function(mode, opts)
         actions.close(prompt_bufnr)
         vim.api.nvim_feedkeys('l', "", false)
         local selection = action_state.get_selected_entry()
-        if not mode or not string.match(mode, "[ir]") then
+        if not mode or not string.match(mode, "[irgvr]") then
           vim.api.nvim_feedkeys("i" .. "" .. selection.value[2], "", false)
         else
           vim.api.nvim_feedkeys(mode .. "" .. selection.value[2], "", false)
