@@ -72,7 +72,7 @@ local digraph_list = map(digraph_raw_list, function(line)
 end)
 
 local digraphs = function(mode, opts)
-  opts = opts or require("telescope.themes").get_dropdown{}
+  opts = opts or require("telescope.themes").get_cursor{}
   pickers.new(opts, {
     prompt_title = "Digraphs",
     finder = finders.new_table {
