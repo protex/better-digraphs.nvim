@@ -53,7 +53,6 @@ local get_digraph_from_doc = function()
     if string.match(line, "digraph%-table%-mbyte") then
       table_found = true
       line_number = 1
-      print('table_found')
     elseif table_found
       and not match_digraph_table_header(line)
       and not is_empty_string(line)
@@ -90,13 +89,21 @@ local digraphs = function(mode, opts)
     },
     attach_mappings = function(prompt_bufnr, map)
       actions.select_default:replace(function()
-        actions.close(prompt_bufnr)
-        vim.api.nvim_feedkeys('l', "", false)
         local selection = action_state.get_selected_entry()
-        if not mode or not string.match(mode, "[irgvr]") then
-          vim.api.nvim_feedkeys("i" .. "" .. selection.value[2], "", false)
-        else
-          vim.api.nvim_feedkeys(mode .. "" .. selection.value[2], "", false)
+        if string.match(mode, "^i$") then
+          actions._close(prompt_bufnr, true)
+          vim.cmd [[startinsert]]
+          vim.api.nvim_feedkeys("" .. selection.value[2], "", false)
+        elseif string.match(mode, "^r$") then
+          actions.close(prompt_bufnr)
+          local _, col = unpack(vim.api.nvim_win_get_cursor(0))
+          if col ~= 0 then
+            vim.api.nvim_feedkeys("l", "", false)
+          end
+          vim.api.nvim_feedkeys("r" .. selection.value[2], "", false)
+        elseif string.match(mode, "^gvr$") then
+          actions.close(prompt_bufnr)
+          vim.api.nvim_feedkeys("gvr" .. selection.value[2], "", false)
         end
       end)
       return true
