@@ -8,11 +8,8 @@ https://user-images.githubusercontent.com/3252946/155826375-69ec4a47-645a-4fe6-8
 Using vim plug
 ```vim
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'protex/better-digraphs'
+Plug 'protex/better-digraphs.nvim'
 ```
-
-
-
 
 
 # Usage
