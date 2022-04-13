@@ -70,6 +70,11 @@ local digraph_list = map(digraph_raw_list, function(line)
   return {columns[5], columns[2], columns[1]}
 end)
 
+local get_cursor_column = function()
+  local _, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col
+end
+
 local digraphs = function(mode, opts)
   opts = opts or require("telescope.themes").get_cursor{}
   pickers.new(opts, {
@@ -92,12 +97,15 @@ local digraphs = function(mode, opts)
         local selection = action_state.get_selected_entry()
         if string.match(mode, "^i$") then
           actions._close(prompt_bufnr, true)
-          vim.cmd [[startinsert]]
+          if get_cursor_column() ~= 0 then
+            vim.api.nvim_feedkeys("a", "", false)
+          else
+            vim.api.nvim_feedkeys("i", "", false)
+          end
           vim.api.nvim_feedkeys("" .. selection.value[2], "", false)
         elseif string.match(mode, "^r$") then
           actions.close(prompt_bufnr)
-          local _, col = unpack(vim.api.nvim_win_get_cursor(0))
-          if col ~= 0 then
+          if get_cursor_column() ~= 0 then
             vim.api.nvim_feedkeys("l", "", false)
           end
           vim.api.nvim_feedkeys("r" .. selection.value[2], "", false)
