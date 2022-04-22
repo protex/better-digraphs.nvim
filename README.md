@@ -1,3 +1,4 @@
+
 # Better Digraphs
 Digraphs are incredibly useful, but oftentimes hard to remember. The `h digraph-table` and `h digaph-table-mbyte` entries are helpful, but cumbersome and their usage tends to interrupt the natural flow that every nvim user aspires to. Enter better-digraphs, a plugin that improves the digraph experience in nvim by adding the contents of the `digraph-table-mbyte` to a telescope finder.
 
@@ -5,6 +6,7 @@ Digraphs are incredibly useful, but oftentimes hard to remember. The `h digraph-
 https://user-images.githubusercontent.com/3252946/155826375-69ec4a47-645a-4fe6-8724-162479973e65.mov
 
 # Installation
+Requires Neovim >= 0.7
 Using vim plug
 ```vim
 Plug 'nvim-telescope/telescope.nvim'
