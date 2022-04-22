@@ -6,7 +6,7 @@ Digraphs are incredibly useful, but oftentimes hard to remember. The `h digraph-
 https://user-images.githubusercontent.com/3252946/155826375-69ec4a47-645a-4fe6-8724-162479973e65.mov
 
 # Installation
-Requires Neovim >= 0.7
+Requires Neovim >= 0.7  
 Using vim plug
 ```vim
 Plug 'nvim-telescope/telescope.nvim'
