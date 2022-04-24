@@ -106,16 +106,18 @@ local digraph_list = generate_default_digraphs()
 if vim.g.BetterDigraphsAdditions then
   local default_mapped_by_digraph = hash_map_digraph_list_by_digraph(digraph_list)
   for _, digraph_addition in pairs(vim.g.BetterDigraphsAdditions) do
-    if string.len(digraph_addition.digraph) then
-      default_mapped_by_digraph[digraph_addition.digraph] = {
-        digraph_addition.name,
-        digraph_addition.digraph,
-        digraph_addition.symbol
-      }
-      vim.fn.digraph_set(digraph_addition.digraph, digraph_addition.symbol)
-    else
-      error('Digraph ' .. digraph_addition.digraph .. 'should only have to characters, found ' .. string.len(digraph_addition.digraph))
+    if string.len(digraph_addition.digraph) ~= 2 then
+      error('Digraph ' .. digraph_addition.digraph .. ' should have 2 characters, found ' .. string.len(digraph_addition.digraph))
     end
+    if string.len(digraph_addition.symbol) ~= 1 then
+      error('Digraph symbol ' .. digraph_addition.symbol .. ' should have 1 characters, found ' .. string.len(digraph_addition.symbol))
+    end
+    default_mapped_by_digraph[digraph_addition.digraph] = {
+      digraph_addition.name,
+      digraph_addition.digraph,
+      digraph_addition.symbol
+    }
+    vim.fn.digraph_set(digraph_addition.digraph, digraph_addition.symbol)
   end
   digraph_list = util.map(default_mapped_by_digraph, function(digraph, _)
     return digraph
