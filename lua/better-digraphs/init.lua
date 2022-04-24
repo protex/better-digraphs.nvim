@@ -103,13 +103,6 @@ local hash_map_digraph_list_by_digraph = function(list)
 end
 
 local digraph_list = generate_default_digraphs()
-vim.g.BetterDigraphsAdditions = {
-  {
-    digraph = 'OK',
-    symbol = 'd',
-    name = 'My digraph'
-  }
-}
 if vim.g.BetterDigraphsAdditions then
   local default_mapped_by_digraph = hash_map_digraph_list_by_digraph(digraph_list)
   for _, digraph_addition in pairs(vim.g.BetterDigraphsAdditions) do
