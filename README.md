@@ -22,4 +22,24 @@ nnoremap r<C-k><C-k> <Cmd>lua require'betterdigraphs'.digraphs("r")<CR>
 vnoremap r<C-k><C-k> <ESC><Cmd>lua require'betterdigraphs'.digraphs("gvr")<CR>
 ```
 
+# Adding or modifying digraphs
+Adding or modifying digraphs can be done by setting the `vim.g.BetterDigraphsAdditions` variable
+
+### Example
+Modifying the `OK` (✓) digraph to be `*`, and adding a new `zz` digraph that maps to `Z`:
+```lua
+vim.g.BetterDigraphsAdditions = {
+  {
+    digraph = "OK",
+    symbol = "*",
+    name = "NEW STAR"
+  },
+  {
+    digraph = "zz",
+    symbol = "Z",
+    name = "CAPITAL Z"
+  }
+}
+```
+
 This will allow the usage of the normal `<C-k>` in insert mode, single character replace, and multiple character replace, but allows you to quickly pull up the search if you can't remember the digraph you're looking for. The search will allow you to fuzzy search by either digraph shortcut (OK for ✓) or official name ("CHECK MARK" for ✓).
