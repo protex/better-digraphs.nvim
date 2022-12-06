@@ -22,6 +22,16 @@ nnoremap r<C-k><C-k> <Cmd>lua require'betterdigraphs'.digraphs("r")<CR>
 vnoremap r<C-k><C-k> <ESC><Cmd>lua require'betterdigraphs'.digraphs("gvr")<CR>
 ```
 
+## What if I've re-mapped <C-k> to something else
+You can change the command sequence that better digraphs uses to enter digraph mode. (<C-v> is helpful for creating the proper control characters)
+```lua
+vim.g.digraph_map_sequences = {
+  insert = "",
+  normal = "",
+  visual = ""
+}
+```
+
 # Adding or modifying digraphs
 Adding or modifying digraphs can be done by setting the `vim.g.BetterDigraphsAdditions` variable
 
