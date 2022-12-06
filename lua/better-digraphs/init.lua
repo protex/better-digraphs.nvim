@@ -4,13 +4,10 @@ local conf = require("telescope.config").values
 local actions = require "telescope.actions"
 local action_state = require "telescope.actions.state"
 local util = require "better-digraphs.util"
+local is_empty_string = require "better-digraphs.util".is_empty_string
 
 local match_digraph_table_header = function(line)
   return string.match(line, "official name")
-end
-
-local is_empty_string = function(line)
-  return line == ""
 end
 
 local match_digraph_table_footer = function(line)
@@ -46,6 +43,48 @@ local generate_default_digraphs = function()
   end)
 end
 
+local picker_select_factory = function(mode, prompt_bufnr)
+  return function()
+    local selection = action_state.get_selected_entry()
+    vim.g.digraph_map_sequences = vim.g.digraph_map_sequences or {}
+    local digraph_map_sequences = {
+      insert = vim.g.digraph_map_sequences.insert or "",
+      normal = vim.g.digraph_map_sequences.normal or "",
+      visual = vim.g.digraph_map_sequences.visual or ""
+    }
+
+    local place_digraph = {
+      insert = function()
+        actions._close(prompt_bufnr, true)
+        if util.get_cursor_column() ~= 0 then
+          vim.api.nvim_feedkeys("a", "", false)
+        else
+          vim.api.nvim_feedkeys("i", "", false)
+        end
+        vim.api.nvim_feedkeys(digraph_map_sequences.insert .. selection.value[2], "", false)
+        print(digraph_map_sequences.insert)
+      end,
+      normal = function()
+        actions.close(prompt_bufnr)
+        vim.api.nvim_feedkeys("r" .. digraph_map_sequences.normal .. selection.value[2], "", false)
+      end,
+      visual = function()
+        actions.close(prompt_bufnr)
+        vim.api.nvim_feedkeys("gvr" .. digraph_map_sequences.visual  .. selection.value[2], "", false)
+      end
+    }
+
+    local deprecated_map = {
+      ["i"] = "insert",
+      ["r"] = "normal",
+      ["gvr"] = "visual"
+    }
+    mode = util.map_deprecated_mode_to_new_mode(mode, deprecated_map)
+    util.validate_mode(place_digraph, mode)
+
+    place_digraph[mode]()
+  end
+end
 
 local digraphs_factory = function(digraph_list)
   return function(mode, opts)
@@ -66,27 +105,7 @@ local digraphs_factory = function(digraph_list)
         end
       },
       attach_mappings = function(prompt_bufnr, _)
-        actions.select_default:replace(function()
-          local selection = action_state.get_selected_entry()
-          if string.match(mode, "^i$") then
-            actions._close(prompt_bufnr, true)
-            if util.get_cursor_column() ~= 0 then
-              vim.api.nvim_feedkeys("a", "", false)
-            else
-              vim.api.nvim_feedkeys("i", "", false)
-            end
-            vim.api.nvim_feedkeys("" .. selection.value[2], "", false)
-          elseif string.match(mode, "^r$") then
-            actions.close(prompt_bufnr)
-            if util.get_cursor_column() ~= 0 then
-              vim.api.nvim_feedkeys("l", "", false)
-            end
-            vim.api.nvim_feedkeys("r" .. selection.value[2], "", false)
-          elseif string.match(mode, "^gvr$") then
-            actions.close(prompt_bufnr)
-            vim.api.nvim_feedkeys("gvr" .. selection.value[2], "", false)
-          end
-        end)
+        actions.select_default:replace(picker_select_factory(mode, prompt_bufnr))
         return true
       end,
       sorter = conf.generic_sorter(opts),

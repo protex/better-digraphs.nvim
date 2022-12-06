@@ -30,9 +30,28 @@ local get_cursor_column = function()
   return col
 end
 
+local map_deprecated_mode_to_new_mode = function(mode, deprecated_map)
+  if deprecated_map[mode] then
+    vim.api.nvim_err_writeln("Mode " .. mode .. ' is depracated, please use "insert", "normal", and "visual", instead')
+    mode = deprecated_map[mode]
+  end
+  return mode
+end
+
+local validate_mode = function(valid_modes, selected_mode)
+  assert(valid_modes[selected_mode], selected_mode .. "is not a valid mode")
+end
+
+local is_empty_string = function(line)
+  return line == ""
+end
+
 return {
   split = split,
   map = map,
   file_exists = file_exists,
-  get_cursor_column = get_cursor_column
+  get_cursor_column = get_cursor_column,
+  map_deprecated_mode_to_new_mode = map_deprecated_mode_to_new_mode,
+  validate_mode = validate_mode,
+  is_empty_string = is_empty_string
 }
