@@ -17,9 +17,9 @@ Plug 'protex/better-digraphs.nvim'
 # Usage
 The recommended mappings for this plugin are the following:
 ```vim
-inoremap <C-k><C-k> <Cmd>lua require'better-digraphs'.digraphs("i")<CR>
-nnoremap r<C-k><C-k> <Cmd>lua require'better-digraphs'.digraphs("r")<CR>
-vnoremap r<C-k><C-k> <ESC><Cmd>lua require'better-digraphs'.digraphs("gvr")<CR>
+inoremap <C-k><C-k> <Cmd>lua require'better-digraphs'.digraphs("insert")<CR>
+nnoremap r<C-k><C-k> <Cmd>lua require'better-digraphs'.digraphs("normal")<CR>
+vnoremap r<C-k><C-k> <ESC><Cmd>lua require'better-digraphs'.digraphs("visual")<CR>
 ```
 
 ## What if I've re-mapped <C-k> to something else
