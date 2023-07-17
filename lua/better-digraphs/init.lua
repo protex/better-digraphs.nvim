@@ -129,7 +129,7 @@ if vim.g.BetterDigraphsAdditions then
       error('Digraph ' .. digraph_addition.digraph .. ' should have 2 characters, found ' .. string.len(digraph_addition.digraph))
     end
     if vim.fn.strdisplaywidth(digraph_addition.symbol) ~= 1 then
-      error('Digraph symbol ' .. digraph_addition.symbol .. ' should have 1 characters, found ' .. string.len(digraph_addition.symbol))
+      error('Digraph symbol ' .. digraph_addition.symbol .. ' should have 1 characters, found ' .. vim.fn.strdisplaywidth(digraph_addition.symbol))
     end
     default_mapped_by_digraph[digraph_addition.digraph] = {
       digraph_addition.name,
