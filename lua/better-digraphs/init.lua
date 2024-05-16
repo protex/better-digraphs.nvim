@@ -55,14 +55,13 @@ local picker_select_factory = function(mode, prompt_bufnr)
 
     local place_digraph = {
       insert = function()
-        actions._close(prompt_bufnr, true)
+        actions.close(prompt_bufnr)
         if util.get_cursor_column() ~= 0 then
           vim.api.nvim_feedkeys("a", "", false)
         else
           vim.api.nvim_feedkeys("i", "", false)
         end
         vim.api.nvim_feedkeys(digraph_map_sequences.insert .. selection.value[2], "", false)
-        print(digraph_map_sequences.insert)
       end,
       normal = function()
         actions.close(prompt_bufnr)
